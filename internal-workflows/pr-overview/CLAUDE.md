@@ -66,7 +66,12 @@ Key judgment calls:
 
 ## Ranking
 
-Bug fixes > features > refactors > docs. Fewer blockers first. Smaller first. Drafts last.
+1. Drafts last
+2. Fewer blockers first (clean before blocked)
+3. Priority labels boost (`critical`, `hotfix`, `bug`)
+4. Type: bug fixes > features > refactors > docs
+5. Recently updated first (active PRs over stale ones)
+6. Smaller first
 
 ## Milestone
 

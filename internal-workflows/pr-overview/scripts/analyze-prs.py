@@ -283,7 +283,17 @@ def main():
             r["recommend_close"] = True
             r["recommend_close_reason"] = "; ".join(reasons)
 
-    results.sort(key=lambda r: (1 if r["isDraft"] else 0, TYPE_PRIORITY.get(r["pr_type"], 99), r["fail_count"], 0 if r["has_priority"] else 1, r["size_score"]))
+    # Ranking: drafts last, then clean before blocked, then type, then
+    # recently updated first (negative days = more recent ranks higher),
+    # then smaller first, with priority labels boosting within tier
+    results.sort(key=lambda r: (
+        1 if r["isDraft"] else 0,
+        r["fail_count"],
+        0 if r["has_priority"] else 1,
+        TYPE_PRIORITY.get(r["pr_type"], 99),
+        r["days_since_update"] if r["days_since_update"] is not None else 999,
+        r["size_score"],
+    ))
     for i, r in enumerate(results):
         r["rank"] = i + 1
 
