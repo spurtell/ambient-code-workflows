@@ -78,7 +78,14 @@ Post on PRs with `fail_count > 0` using `<!-- review-queue-bot -->` marker. Skip
 
 ## Report
 
-Use `templates/review-queue.md`. Ready PRs in a condensed table, blocked PRs with full blocker tables, recommend-close PRs in a separate table.
+Use `templates/review-queue.md`. Sections:
+
+- **Ready for Review** — condensed table, priority ordered
+- **Blocked PRs** — table ordered by last updated (most recent first), limit 50. Each row shows blocker icons (CI, CONFLICT, REVIEW, STALE, OVERLAP) and a short issue snippet (e.g., "CI: e2e failing", "CHANGES_REQUESTED from @bob", "Merge conflicts")
+- **Almost Ready** — PRs with exactly 1 blocker, easiest to unblock
+- **Recommend Closing** — stale/abandoned PRs
+- **Drafts** — WIP PRs
+- **Summary** — counts by bucket + by type
 
 ## Blocker Checklist
 
