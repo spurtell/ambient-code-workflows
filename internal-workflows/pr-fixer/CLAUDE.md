@@ -65,6 +65,20 @@ gh run view {run_id} --repo {owner/repo} --log-failed
 
 Read the error, find the failing test, read the test code, fix the root cause.
 
+## Committing
+
+All fixes go in a **single commit** authored by the bot:
+
+```bash
+git add -A
+git commit --author="ambient-code[bot] <ambient-code[bot]@users.noreply.github.com>" \
+  -m "fix: address review feedback
+
+<bullet list of what was fixed>
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
 ## Pushing
 
 Use `git push --force-with-lease`. Show what you're pushing before you push.
