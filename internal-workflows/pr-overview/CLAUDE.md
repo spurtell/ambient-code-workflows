@@ -50,40 +50,53 @@ Reads each `summary.json`, writes `analysis.json` per PR and `queue.json` at top
 
 ## Sub-Agent Evaluation
 
-The analyze script handles mechanical checks. Sub-agents produce the final verdict per PR by reasoning across **all available data** — not just comments.
+The analyze script handles mechanical checks. Sub-agents produce the final verdict per PR by building a concern checklist, verifying each item, and consolidating.
 
-Spawn sub-agents in parallel (batches of ~10). Each sub-agent reads **all of these** for its PRs:
+Spawn sub-agents in parallel (batches of ~10). Each sub-agent works through **three steps** per PR:
 
-1. **`summary.json`** — the ground truth: current CI status, mergeable state, review decision, commit count
-2. **`timeline.json`** — **start here** — chronological interleaving of commits and comments. This shows the full story: reviewer comments, then author commits, then more comments. You can see if a commit after a review comment likely addressed the concern.
-3. **`ci/overview.json`** — which checks are passing/failing right now
-4. **`reviews/overview.json`** — who approved, who requested changes, current state
-5. **`comments/`** — individual comment files if you need full bodies (timeline only has 120-char summaries)
+### Step 1: Read everything and build a concern list
 
-**Use the timeline to determine if issues were addressed.** If you see:
-- Review comment at March 8: "fix error handling in get_env()"
-- Commit at March 9: "fix: handle nil error in get_env()"
-- No further comment from that reviewer
+Read these files:
+- **`summary.json`** — ground truth: current CI, mergeable, review decision, commit count
+- **`timeline.json`** — chronological interleave of commits and comments (start here for the narrative)
+- **`ci/overview.json`** — which checks are passing/failing right now
+- **`reviews/overview.json`** — who approved, who requested changes
+- **`comments/`** — full comment bodies if timeline summaries aren't enough
 
-Then the concern was likely addressed — the PR needs re-approval, not more code changes.
+Build a checklist of every concern raised from any source:
+- Each reviewer comment or inline thread → one concern
+- CI failures → one concern per failing check
+- Merge conflicts → one concern
+- CHANGES_REQUESTED reviews → one concern per reviewer
+- Bot review findings → one concern per finding (not one per comment — a single bot comment may raise 5 issues, or 5 bot comments may all be about the same thing)
 
-**Comments are context, not truth.** A comment saying "CI is failing" from 3 days ago means nothing if `ci.status` is `pass` now. Always cross-reference against the current state in `summary.json`.
+**Not every comment is a concern.** Skip:
+- Bot status comments ("CI passed", "review-queue-bot" markers)
+- Acknowledgments ("thanks", "LGTM", "looks good")
+- Questions that were answered
+- Duplicate comments about the same issue
 
-Each sub-agent returns:
+### Step 2: Verify each concern against current state
 
+For each concern on your list, check if it's still valid:
+
+- **CI comment says failing** → check `ci/overview.json` — is it actually failing now? If CI is green, mark resolved.
+- **Reviewer requested changes** → check `timeline.json` — is there a commit after the review that looks like it addresses the concern? If yes, mark as "likely addressed, needs re-approval."
+- **Bot flagged a code issue** → check `timeline.json` — was there a commit after the bot review? Check if the commit message suggests the issue was fixed. If unsure, read the full comment body from `comments/` and cross-reference with `diff.json` to see if the relevant code was changed.
+- **Merge conflicts** → check `summary.json` mergeable field — is it CONFLICTING right now?
+- **Stale concerns** → if the comment is from weeks ago and there have been multiple commits since, it's likely stale.
+
+Mark each concern as: **open** (still needs action), **resolved** (addressed), or **irrelevant** (not a real issue).
+
+### Step 3: Consolidate and produce verdict
+
+Group related concerns (e.g., 3 bot comments about the same function → 1 item). Drop resolved and irrelevant items. What's left is the real picture.
+
+Return:
 - **verdict**: ready / almost / blocked / stale
-- **review_summary**: 2-3 bullet points — what happened, what's resolved, what's outstanding
-- **action_needed**: the one thing that needs to happen next
-- **action_owner**: who needs to act
-
-Key judgment calls:
-- Comment says CI failing but `ci.status` is `pass` → CI is fine, ignore the comment
-- CHANGES_REQUESTED is active but the concern was addressed in a later commit → needs re-approval from reviewer, not a code blocker
-- Bot review flagged issues but they were fixed → not blocking
-- Stale bot review on old commit = not blocking
-- "nit" with CHANGES_REQUESTED state = not a real blocker
-- No comments at all = needs first review, not blocked
-- Unresolved substantive disagreement in comments + no resolution in later commits = blocked
+- **review_summary**: bullet points — what's resolved, what's still open
+- **action_needed**: the one concrete thing that needs to happen next
+- **action_owner**: who needs to act (`@author`, `@reviewer-name`, `@maintainer`)
 
 ## Ranking
 
