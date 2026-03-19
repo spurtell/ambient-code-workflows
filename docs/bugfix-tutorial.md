@@ -344,23 +344,29 @@ steps. See the
 [action repository](https://github.com/ambient-code/ambient-action) for the
 full list of inputs and outputs.
 
-### Other tools
+### Tools that do NOT yet support workflows
 
-Several other tools can manage ACP sessions, though their support for
-specifying a workflow varies:
+Several other tools can create and manage ACP sessions. At the time of writing,
+none of them support setting `activeWorkflow`, which means they cannot load the
+structured Bug Fix workflow described in this tutorial. They will create a
+session, but it will not have the phases, commands, or reports that the workflow
+provides.
 
 - **[`acpctl`](https://github.com/ambient-code/platform/tree/main/components/ambient-cli)**
   is a command-line tool for the platform. It can create sessions and check
-  their status, but does not yet have a flag for specifying a workflow.
+  their status, but does not have a flag for specifying a workflow.
 - **[`mcp-acp`](https://github.com/ambient-code/mcp)** is an MCP server that
   lets you manage ACP sessions from Claude Desktop, Claude Code, or any
-  MCP-compatible client. It supports creating sessions from predefined
-  templates including bugfix.
+  MCP-compatible client. It has a "bugfix" template, but that template only
+  sets a generic prompt and model. It does not load the Bug Fix workflow.
 - **[Ambient Platform SDKs](https://github.com/ambient-code/platform/tree/main/components/ambient-sdk)**
   provide client libraries in Go, Python, and TypeScript for programmatic
   session management.
 
-Since the underlying mechanism is a single REST call (as shown in the `curl`
-example above), you can always fall back to a direct HTTP request from any
-language or tool if the higher-level wrappers do not yet support the options you
-need.
+If you want to automate bug fix sessions from a script, CI pipeline, or any
+other environment, you do not need any of these tools. The platform's backend
+API accepts a straightforward JSON POST request (as shown in the `curl` example
+above). The `activeWorkflow` field in that request is what tells the platform to
+load the Bug Fix workflow into the session. Any HTTP client in any language can
+make that call. The GitHub Action is just a convenience wrapper that does the
+same thing and adds polling for completion.
