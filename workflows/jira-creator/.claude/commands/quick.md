@@ -23,22 +23,32 @@ Fast-path issue creation for experienced users. Only asks for the essential fiel
 
 2. **Load Template**: Read `templates/{type}.md` to identify the "Always ask" fields only.
 
-3. **Gather Minimal Fields**:
-   - **All types**: Summary, Components, Priority
-   - **Feature**: + Target Version, Description
-   - **Epic**: + Target Version, Epic Name, Description
-   - **Story**: + Target Version, Description
-   - **Bug**: + Target Version, Severity, Steps to Reproduce, Description
-   - **Task**: + Description
-   - **Spike**: + Description
-   - **Outcome/Initiative**: + Description
+3. **Gather Minimal Fields** (matches "Always Ask" in each template):
+   - **All types**: Summary, Description, Components, Priority
+   - **Outcome**: + Size, Release Type
+   - **Initiative**: + Size, Release Type
+   - **Feature**: + Size, Release Type
+   - **Epic**: + Epic Name, Target Version
+   - **Story**: + Target Version
+   - **Bug**: + Target Version, Severity, Steps to Reproduce
+   - **Task**: (no additional fields)
+   - **Spike**: (no additional fields)
 
-4. **Smart Defaults**:
+4. **Smart Defaults** (applied automatically, skip asking):
    - Priority: default to `Normal` (10003) unless specified
    - Reporter: current user (auto-detected)
    - Project: always `ACM`
+   - Outcome: Activity Type → Product / Portfolio Work (10610), Labels → `outcome`
+   - Initiative: Activity Type → Product / Portfolio Work (10610), Labels → `initiative`
+   - Feature: Activity Type → Product / Portfolio Work (10610)
+   - Story: Activity Type → Product / Portfolio Work (10610)
 
-5. **Pre-Creation Review**:
+5. **Parent Inheritance**: If the user provides a parent issue key, fetch it and pre-fill:
+   - Components (from parent)
+   - Target Version (from parent)
+   - Activity Type (from parent, if not already a smart default)
+
+6. **Pre-Creation Review**:
 
    Use `@field-expert` agent to validate Components and any option fields, then show a compact preview:
 
@@ -53,9 +63,9 @@ Fast-path issue creation for experienced users. Only asks for the essential fiel
 
    Ask: **Create**, **Edit**, or **Cancel**?
 
-6. **Create Issue**: Use `createJiraIssue` MCP tool. Report key and link.
+7. **Create Issue**: Use `createJiraIssue` MCP tool. Report key and link.
 
-7. **Log**: Append to `artifacts/jira-creator/created-issues.md`
+8. **Log**: Append to `artifacts/jira-creator/created-issues.md`
 
 ## Output
 
