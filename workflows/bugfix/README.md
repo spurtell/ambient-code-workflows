@@ -19,37 +19,47 @@ bugfix/
 ├── .ambient/
 │   └── ambient.json          # Workflow configuration
 ├── .claude/
-│   ├── commands/             # Slash commands (thin wrappers → skills)
-│   │   ├── reproduce.md
-│   │   ├── diagnose.md
-│   │   ├── fix.md
-│   │   ├── test.md
-│   │   ├── review.md
-│   │   ├── document.md
-│   │   └── pr.md
-│   └── skills/               # Detailed process definitions
+│   └── skills/               # All workflow logic lives here
+│       ├── controller/SKILL.md   # Phase transitions and recommendations
+│       ├── assess/SKILL.md
 │       ├── reproduce/SKILL.md
 │       ├── diagnose/SKILL.md
 │       ├── fix/SKILL.md
 │       ├── test/SKILL.md
 │       ├── review/SKILL.md
 │       ├── document/SKILL.md
-│       └── pr/SKILL.md
+│       ├── pr/SKILL.md
+│       └── speedrun/SKILL.md    # Runs all remaining phases in sequence
 ├── CLAUDE.md                 # Behavioral guidelines
 └── README.md                 # This file
 ```
 
-### How Commands and Skills Work Together
+### How Skills Work
 
-Each **command** is a thin wrapper that invokes a corresponding **skill**. When you run `/diagnose`, the command file tells the agent to read the Diagnose skill from `.claude/skills/diagnose/SKILL.md` and apply it — passing along any arguments you provided plus existing session context.
+Each phase is implemented as a **skill** in `.claude/skills/{name}/SKILL.md`. When you run `/assess`, `/fix`, etc., the corresponding skill is invoked directly. Each phase skill checks whether it was dispatched by the controller or speedrun; if invoked standalone, it reads the controller first to ensure proper workflow context.
 
-This separation keeps commands simple and consistent while the skills contain the full process details.
+The **controller** skill manages phase transitions and recommends next steps. The **speedrun** skill bypasses the controller and runs all remaining phases in sequence without stopping.
 
 ## Workflow Phases
 
 The Bug Fix Workflow follows this approach:
 
-### Phase 1: Reproduce (`/reproduce`)
+### Phase 1: Assess (`/assess`)
+
+**Purpose**: Understand the bug report and propose a plan before taking action.
+
+- Read the bug report, issue URL, or symptom description
+- Clone the repository if not already available (read-only, no code executed)
+- Summarize understanding of the bug, its location, and severity
+- Identify what information is available and what is missing
+- Propose a reproduction plan
+- Let the user correct misunderstandings before work begins
+
+**Output**: `artifacts/bugfix/reports/assessment.md`
+
+**When to use**: Start here to build a shared understanding before investing effort. This is the default first phase when you provide a bug report.
+
+### Phase 2: Reproduce (`/reproduce`)
 
 **Purpose**: Systematically reproduce the bug and document observable behavior.
 
@@ -63,7 +73,7 @@ The Bug Fix Workflow follows this approach:
 
 **When to use**: Start here if you have a bug report, issue URL, or symptom description.
 
-### Phase 2: Diagnose (`/diagnose`)
+### Phase 3: Diagnose (`/diagnose`)
 
 **Purpose**: Perform root cause analysis and assess impact.
 
@@ -78,7 +88,7 @@ The Bug Fix Workflow follows this approach:
 
 **When to use**: After successful reproduction, or skip here if you know the symptoms.
 
-### Phase 3: Fix (`/fix`)
+### Phase 4: Fix (`/fix`)
 
 **Purpose**: Implement the bug fix following best practices.
 
@@ -93,7 +103,7 @@ The Bug Fix Workflow follows this approach:
 
 **When to use**: After diagnosis phase, or jump here if you already know the root cause.
 
-### Phase 4: Test (`/test`)
+### Phase 5: Test (`/test`)
 
 **Purpose**: Verify the fix and create regression tests.
 
@@ -108,7 +118,7 @@ The Bug Fix Workflow follows this approach:
 
 **When to use**: After implementing the fix.
 
-### Phase 5: Review (`/review`) — Optional
+### Phase 6: Review (`/review`) — Optional
 
 **Purpose**: Critically evaluate the fix and its tests before proceeding.
 
@@ -123,11 +133,11 @@ The Bug Fix Workflow follows this approach:
 - **Fix is adequate, tests are incomplete** → Provide instructions for what additional testing is needed (including manual steps for the user)
 - **Fix and tests are solid** → Recommend proceeding to `/document` and `/pr`
 
-**Output**: Review findings reported inline to the user (not a file).
+**Output**: `artifacts/bugfix/review/verdict.md`
 
 **When to use**: After `/test`, especially for complex or high-risk fixes.
 
-### Phase 6: Document (`/document`)
+### Phase 7: Document (`/document`)
 
 **Purpose**: Create complete documentation for the fix.
 
@@ -141,7 +151,7 @@ The Bug Fix Workflow follows this approach:
 
 **When to use**: After testing is complete.
 
-### Phase 7: PR (`/pr`)
+### Phase 8: PR (`/pr`)
 
 **Purpose**: Create a pull request to submit the bug fix.
 
@@ -162,7 +172,7 @@ The Bug Fix Workflow follows this approach:
 1. **Create an AgenticSession** in the Ambient Code Platform
 2. **Select "Bug Fix Workflow"** from the workflows dropdown
 3. **Provide context**: Bug report URL, issue number, or symptom description
-4. **Start with `/reproduce`** to systematically document the bug
+4. **Start with `/assess`** to analyze the bug report and build a plan
 5. **Follow the phases** sequentially or jump to any phase based on your context
 
 ### Example Usage

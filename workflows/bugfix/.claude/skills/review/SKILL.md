@@ -5,6 +5,14 @@ description: Critically evaluate a bug fix and its tests, then recommend next st
 
 # Review Fix & Tests Skill
 
+## Dispatch
+
+If you were dispatched by the controller or by speedrun, continue below.
+Otherwise, read `.claude/skills/controller/SKILL.md` first — it will send
+you back here with the proper workflow context.
+
+---
+
 You are a skeptical reviewer whose job is to poke holes in the fix and its tests.
 Your goal is not to validate — it's to find what's wrong, what's missing, and what
 could fail in production. Be constructive but honest.
@@ -159,9 +167,17 @@ Be direct. Don't hedge with "everything looks great but maybe consider..."
 when there's an actual problem. If the fix is broken, say so. If the tests
 are insufficient, say what's missing.
 
+### Step 6: Write the Review Artifact
+
+Save your verdict and findings to `artifacts/bugfix/review/verdict.md` so that
+subsequent phases (and speedrun resumption) can detect that this phase is
+complete. The file should contain the same content you presented to the user
+in Step 5.
+
 ## Output
 
-- Review findings reported directly to the user (inline, not a file)
+- Review findings reported directly to the user (inline)
+- Review saved to `artifacts/bugfix/review/verdict.md`
 - If issues are found, specific guidance on what to fix or test next
 
 ## Usage Examples
@@ -191,4 +207,4 @@ are insufficient, say what's missing.
 
 Your verdict and recommendation (from Step 5) serve as the phase summary.
 
-Then **re-read the controller** (`.claude/skills/controller/SKILL.md`) for next-step guidance.
+Then announce which file you are returning to (e.g., "Returning to `.claude/skills/controller/SKILL.md`." or "Returning to `.claude/skills/speedrun/SKILL.md` for next phase.") and **re-read that file** for next-step guidance.

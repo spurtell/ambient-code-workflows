@@ -5,6 +5,14 @@ description: Understand the bug report and propose a plan before taking action.
 
 # Assess Bug Report Skill
 
+## Dispatch
+
+If you were dispatched by the controller or by speedrun, continue below.
+Otherwise, read `.claude/skills/controller/SKILL.md` first — it will send
+you back here with the proper workflow context.
+
+---
+
 You are reviewing a bug report to build a shared understanding with the user
 before any work begins. This is the first phase of the bugfix workflow. Your
 job is to read, think, and explain — not to start fixing anything.
@@ -131,9 +139,17 @@ Deliver your assessment in this structure:
 Be direct. If the bug report is clear and complete, say so. If it's vague or
 missing critical details, say that too.
 
+### Step 7: Write the Assessment Artifact
+
+Save your assessment to `artifacts/bugfix/reports/assessment.md` so that
+subsequent phases (and speedrun resumption) can detect that this phase is
+complete. The file should contain the same content you presented to the user
+in Step 6.
+
 ## Output
 
-- Assessment presented directly to the user (inline, not a file artifact)
+- Assessment presented directly to the user (inline)
+- Assessment saved to `artifacts/bugfix/reports/assessment.md`
 - The project repository cloned and available for subsequent phases
 - No code is executed, no files in the project are modified
 
@@ -143,6 +159,6 @@ Report your assessment:
 
 - Your understanding of the bug
 - Key gaps or risks identified
-
-Then **re-read the controller** (`.claude/skills/controller/SKILL.md`) for next-step guidance.
 - Your proposed plan
+
+Then announce which file you are returning to (e.g., "Returning to `.claude/skills/controller/SKILL.md`." or "Returning to `.claude/skills/speedrun/SKILL.md` for next phase.") and **re-read that file** for next-step guidance.
