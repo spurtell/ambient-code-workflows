@@ -8,25 +8,32 @@ A **Feature** represents a product capability or market requirement that deliver
 - **Hierarchy Level**: 2
 - **Available Fields**: 77
 
+## Smart Defaults
+
+These fields are set automatically unless the user overrides them:
+
+| Field | Key | Default | ID |
+|-------|-----|---------|----|
+| Activity Type | `customfield_10464` | Product / Portfolio Work | 10610 |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
 | Summary | `summary` | Market-facing capability statement. Focus on the customer problem being solved. |
-| Description | `description` | Problem statement, target persona, business value, and high-level solution approach |
-| Components | `components` | Primary ACM component(s) — see reference for valid values |
-| Target Version | `customfield_10855` | Target ACM/MCE release version |
+| Description | `description` | Use this structure: **Problem** (what's broken/missing), **Target Persona** (who benefits), **Business Value** (measurable impact), **Solution Approach** (high-level how) |
+| Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
+| Release Type | `customfield_10851` | GA (19299), Tech Preview (19300), Conditional Tech Preview (19301), Dev Preview (19302) |
+| Size | `customfield_10795` | XL (19206), L (19207), M (19208), S (19209), XS (19210) |
 
 ## Recommended
 
 | Field | Key | Guidance |
 |-------|-----|----------|
 | Parent | `parent` | Link to parent Initiative or Outcome (if applicable) |
-| Acceptance Criteria | `customfield_10718` | Testable conditions that define "done" for this feature |
-| Release Type | `customfield_10851` | GA (19299), Tech Preview (19300), Dev Preview (19302) |
-| Size | `customfield_10795` | XL (19206), L (19207), M (19208), S (19209), XS (19210) |
-| Activity Type | `customfield_10464` | Usually "Product / Portfolio Work" (10610) |
+| Acceptance Criteria | `customfield_10718` | Testable conditions that define "done" — separate from Description |
+| Target Version | `customfield_10855` | Target ACM/MCE release. Leave blank if not yet planned. |
 | Product Manager | `customfield_10469` | PM responsible for this feature |
 | Architect | `customfield_10467` | Technical architect |
 
@@ -51,7 +58,16 @@ A **Feature** represents a product capability or market requirement that deliver
 
 **Summary**: Cluster compliance dashboard with real-time policy violation alerts
 
+**Components**: Console, GRC
+
+**Priority**: Major
+
+**Release Type**: GA
+
+**Size**: L
+
 **Description**:
+
 **Problem**: Platform engineers managing 50+ clusters lack a centralized view of compliance status. Current workflow requires checking each cluster individually, leading to delayed response to policy violations and audit findings.
 
 **Target Persona**: Platform Engineer, Security Operations
@@ -60,7 +76,8 @@ A **Feature** represents a product capability or market requirement that deliver
 
 **Solution Approach**: Add a compliance dashboard to the ACM Console that aggregates policy violations across all managed clusters with configurable alerting thresholds.
 
-**Acceptance Criteria**:
+**Acceptance Criteria** (separate field — `customfield_10718`):
+
 - Dashboard displays real-time compliance status for all managed clusters
 - Policy violations are surfaced within 60 seconds of detection
 - Configurable alert thresholds for violation count and severity

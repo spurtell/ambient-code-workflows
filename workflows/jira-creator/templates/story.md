@@ -8,13 +8,21 @@ A **Story** represents a unit of user-facing functionality that delivers value t
 - **Hierarchy Level**: 0
 - **Available Fields**: 77
 
+## Smart Defaults
+
+These fields are set automatically unless the user overrides them:
+
+| Field | Key | Default | ID |
+|-------|-----|---------|----|
+| Activity Type | `customfield_10464` | Product / Portfolio Work | 10610 |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
 | Summary | `summary` | User-centric statement. Use "As a [role], [action]" or describe the user-visible behavior. |
-| Description | `description` | User story details: who, what, why, and any technical context needed |
-| Components | `components` | ACM component(s) this story belongs to |
+| Description | `description` | Use this structure: **User Story** ("As a [role], I want [capability] so that [benefit]"), **Context** (which epic/feature this belongs to), **Technical Notes** (implementation hints if known) |
+| Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Target Version | `customfield_10855` | Target ACM/MCE release |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
 
@@ -23,9 +31,8 @@ A **Story** represents a unit of user-facing functionality that delivers value t
 | Field | Key | Guidance |
 |-------|-----|----------|
 | Parent | `parent` | Link to parent Epic |
-| Acceptance Criteria | `customfield_10718` | Testable criteria — what must be true for this story to be "done"? |
+| Acceptance Criteria | `customfield_10718` | Testable criteria — separate from Description. What must be true for this story to be "done"? |
 | Story Points | `customfield_10028` | Estimated effort (Fibonacci: 1, 2, 3, 5, 8, 13) |
-| Activity Type | `customfield_10464` | Categorize the work |
 
 ## Optional
 
@@ -37,26 +44,33 @@ A **Story** represents a unit of user-facing functionality that delivers value t
 | Documentation Type | `customfield_10659` | Docs impact |
 | Regression | `customfield_10623` | Yes (16062) / No (16061) |
 | Test Coverage | `customfield_10638` | + (15875), - (15876), ? (15877) |
-| Customer Impact | `customfield_10689` | Customer escalated/facing/reported |
+| Customer Impact | `customfield_10689` | Escalated (16324), Facing (16325), QE Confirmed (16326), Reported (16327) |
 | Organization Sponsor | `customfield_10558` | Sponsoring org |
 
 ## Example
 
 **Summary**: Display policy violation count badges on cluster list page
 
+**Components**: Console, GRC
+
+**Target Version**: ACM 2.16.0
+
+**Priority**: Normal
+
 **Description**:
-As a platform engineer, I want to see policy violation counts directly on the cluster list page so that I can quickly identify clusters with compliance issues without navigating to each cluster's detail view.
 
-## Context
-This story is part of the Compliance Dashboard epic. It adds violation count badges to the existing cluster list view in the ACM Console.
+**User Story**: As a platform engineer, I want to see policy violation counts directly on the cluster list page so that I can quickly identify clusters with compliance issues without navigating to each cluster's detail view.
 
-## Technical Notes
+**Context**: This story is part of the Compliance Dashboard epic. It adds violation count badges to the existing cluster list view in the ACM Console.
+
+**Technical Notes**:
 - Query the compliance-aggregator API for violation counts per cluster
 - Display badge with count next to cluster name (red for critical, yellow for warning)
 - Badge should link to the cluster's compliance detail view
 - Use existing PatternFly badge component
 
-**Acceptance Criteria**:
+**Acceptance Criteria** (separate field — `customfield_10718`):
+
 - Violation count badge appears next to each cluster name on the cluster list page
 - Badge color reflects highest severity violation (red=critical, yellow=important, green=compliant)
 - Clicking the badge navigates to the cluster's compliance detail view

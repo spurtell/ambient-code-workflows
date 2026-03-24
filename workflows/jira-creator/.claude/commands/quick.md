@@ -38,7 +38,20 @@ Fast-path issue creation for experienced users. Only asks for the essential fiel
    - Reporter: current user (auto-detected)
    - Project: always `ACM`
 
-5. **Quick Confirmation**: Show a compact summary (3-5 lines) and ask for OK.
+5. **Pre-Creation Review**:
+
+   Use `@field-expert` agent to validate Components and any option fields, then show a compact preview:
+
+   ```
+   [TYPE] Summary text here
+   Components: Console | Priority: Normal | Severity: Important
+   Target Ver: ACM 2.16.0 | Parent: (none)
+   ⚠ No Acceptance Criteria set
+   ```
+
+   Flag missing recommended fields as warnings (single line each). Show a quick hygiene score (e.g., "Quality: 6/10").
+
+   Ask: **Create**, **Edit**, or **Cancel**?
 
 6. **Create Issue**: Use `createJiraIssue` MCP tool. Report key and link.
 

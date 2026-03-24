@@ -13,8 +13,8 @@ A **Spike** is a time-boxed research or investigation task. Spikes produce knowl
 | Field | Key | Guidance |
 |-------|-----|----------|
 | Summary | `summary` | "Spike: [topic] — [key question]". Always prefix with "Spike:" for clarity. |
-| Description | `description` | Research questions, scope, timebox, and expected deliverables |
-| Components | `components` | ACM component(s) this investigation relates to |
+| Description | `description` | Use this structure: **Research Questions** (numbered list of specific questions to answer), **Timebox** (effort budget in points/days), **Deliverables** (what artifact will be produced), **Out of Scope** (what this spike will NOT cover) |
+| Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
 
 ## Recommended
@@ -23,7 +23,7 @@ A **Spike** is a time-boxed research or investigation task. Spikes produce knowl
 |-------|-----|----------|
 | Assignee | `assignee` | Researcher/investigator |
 | Story Points | `customfield_10028` | Timebox in points (e.g., 3 = ~3 days) |
-| Acceptance Criteria | `customfield_10718` | What questions must be answered? What artifact produced? |
+| Acceptance Criteria | `customfield_10718` | What questions must be answered? What artifact produced? — separate from Description |
 | Parent | `parent` | Link to parent Epic if part of a larger effort |
 
 ## Optional
@@ -39,22 +39,33 @@ A **Spike** is a time-boxed research or investigation task. Spikes produce knowl
 
 **Summary**: Spike: Evaluate Argo CD vs Flux for GitOps addon replacement
 
+**Components**: Application Lifecycle, GitOps Addon
+
+**Priority**: Major
+
 **Description**:
-## Research Questions
+
+**Research Questions**:
 1. How do Argo CD and Flux compare for multi-cluster GitOps at scale (500+ clusters)?
 2. What is the migration effort from the current GitOps addon to each option?
 3. What are the resource footprint differences on the hub cluster?
 4. How does each handle large ApplicationSet deployments (1000+ applications)?
 5. What is the upstream community health and release cadence for each?
 
-## Timebox
-3 story points (~3 days of focused research)
+**Timebox**: 3 story points (~3 days of focused research)
 
-## Deliverables
+**Deliverables**:
 - Comparison matrix document covering all research questions
 - Proof-of-concept deployment of top candidate with 50 managed clusters
 - Recommendation with trade-offs for team review
 
-## Out of Scope
+**Out of Scope**:
 - Full migration plan (that will be a separate Epic if we decide to proceed)
 - Performance benchmarking beyond basic resource footprint
+
+**Acceptance Criteria** (separate field — `customfield_10718`):
+
+- All 5 research questions answered with evidence
+- Comparison matrix document published to team wiki
+- POC deployed and results documented
+- Recommendation presented to team with clear trade-offs

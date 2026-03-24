@@ -38,10 +38,44 @@ Create a well-formed ACM JIRA issue through an interactive, guided process. This
    - Ask "Would you like to set any optional fields?" and list them
    - Only gather values for fields the user wants to set
 
-7. **Review Summary**:
-   - Present a formatted summary of all fields that will be set
-   - Highlight any potential issues (missing recommended fields, etc.)
-   - Ask for confirmation
+7. **Pre-Creation Review**:
+
+   Before creating, run a thorough review of the draft issue:
+
+   a. **Validate fields**: Use `@field-expert` agent to verify all Components, Target Version, and option field values resolve to valid IDs.
+
+   b. **Present JIRA-style preview**: Format the draft to mirror how it will appear in JIRA:
+      ```
+      ┌─────────────────────────────────────────────────┐
+      │ [TYPE] Summary text here                        │
+      ├─────────────────────────────────────────────────┤
+      │ Project:    ACM                                 │
+      │ Type:       Feature          Priority: Major    │
+      │ Components: Console, GRC     Size:     L        │
+      │ Target Ver: (not set)        Release:  GA       │
+      │ Parent:     ACM-12345        Assignee: (none)   │
+      ├─────────────────────────────────────────────────┤
+      │ Description:                                    │
+      │ (first 3-5 lines of description)                │
+      ├─────────────────────────────────────────────────┤
+      │ Acceptance Criteria:                            │
+      │ - criterion 1                                   │
+      │ - criterion 2                                   │
+      └─────────────────────────────────────────────────┘
+      ```
+
+   c. **Hygiene warnings**: Flag issues but do NOT block creation:
+      - **Missing recommended fields** — list which ones are unset (e.g., "Acceptance Criteria: not set")
+      - **Summary quality** — warn if too vague, too long (>120 chars), or missing component context
+      - **Description quality** — warn if it doesn't follow the structured format for this type
+      - **Hierarchy gap** — warn if no parent is set where one is expected (Story without Epic, Epic without Feature)
+
+   d. **Score**: Show a quick hygiene score (e.g., "Quality: 8/10 — missing Acceptance Criteria")
+
+   e. **Ask for confirmation**: Present three options:
+      - **Create** — proceed as-is
+      - **Edit** — go back and change specific fields
+      - **Cancel** — abort
 
 8. **Create Issue**:
    - Use `createJiraIssue` MCP tool with the gathered fields
