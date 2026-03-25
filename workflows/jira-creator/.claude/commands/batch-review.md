@@ -34,7 +34,7 @@ Review all child issues of an Epic or Feature at once, producing a summary table
 
 4. **Review Each Child**: For each child issue, use `@hygiene-reviewer` agent to assess:
    - Completeness (fields populated vs template expectations)
-   - Summary quality
+   - Summary quality — including length check (flag if > 80 chars, suggest shortening if > 100)
    - Description quality
    - Acceptance Criteria presence
    - Consistency with parent (Components, Target Version match)
@@ -45,13 +45,13 @@ Review all child issues of an Epic or Feature at once, producing a summary table
    ```
    Children of ACM-12345 [Epic] Search performance improvements
 
-   Key       | Type  | Summary                           | Score | Issues
-   ----------|-------|-----------------------------------|-------|------------------
-   ACM-12346 | Story | Add query result caching layer    | 9/10  | —
-   ACM-12347 | Story | Optimize indexer batch size        | 6/10  | No AC, no points
-   ACM-12348 | Task  | Benchmark search latency          | 7/10  | No AC
-   ACM-12349 | Spike | Evaluate switching to OpenSearch   | 8/10  | No assignee
-   ACM-12350 | Story | Add search query suggestions       | 3/10  | No desc, no AC
+   Key       | Type  | Summary                           | Chars | Score | Issues
+   ----------|-------|-----------------------------------|-------|-------|------------------
+   ACM-12346 | Story | Add query result caching layer    | 34    | 9/10  | —
+   ACM-12347 | Story | Optimize indexer batch size        | 30    | 6/10  | No AC, no points
+   ACM-12348 | Task  | Benchmark search latency          | 26    | 7/10  | No AC
+   ACM-12349 | Spike | Evaluate switching to OpenSearch   | 35    | 8/10  | No assignee
+   ACM-12350 | Story | Add search query suggestions       | 31    | 3/10  | No desc, no AC
 
    Average score: 6.6/10
    ```
@@ -63,6 +63,7 @@ Review all child issues of an Epic or Feature at once, producing a summary table
    - 2/5 have no Story Points
    - 1/5 has Components mismatched with parent (ACM-12350: Console ≠ Search)
    - 1/5 has empty Description
+   - N/5 summaries exceed 80 chars (flag with suggested shortenings)
    ```
 
 7. **Consistency Check**: Flag children that don't match the parent:

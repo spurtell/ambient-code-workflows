@@ -9,11 +9,24 @@ A **Bug** is a defect report describing incorrect, unexpected, or broken behavio
 - **Available Fields**: 80
 - **Unique Fields**: Steps to Reproduce (`customfield_10821`), Special Handling (`customfield_10670`), Escape Impact/Reason, Corrective Measures
 
+## Summary Guidelines
+
+**Length:** 60-80 characters (max 100)
+**Format:** "[Component] [broken behavior] when [condition]"
+**Include:** Component, specific broken behavior, triggering condition
+**Exclude:** Full sentences, impact descriptions — put those in Description
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "[Console] Cluster import fails with special chars in kubeconfig" | 65 | Good |
+| "Console crashes on cluster import with special chars" | 54 | Good |
+| "Console application crashes when attempting to import a cluster with special characters in the cluster name field" | 116 | Bad — too long |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | "[Component] [broken behavior] when [condition]" — be specific and searchable |
+| Summary | `summary` | "[Component] [broken behavior] when [condition]" (60-80 chars ideal, max 100). Be specific and searchable. Avoid full sentences. |
 | Description | `description` | Use this structure: **Problem** (what's broken and how it manifests), **Impact** (who is affected and how badly), **Environment** (ACM version, OCP version, browser, infrastructure) |
 | Steps to Reproduce | `customfield_10821` | Numbered steps to reproduce the issue. Be precise — include exact navigation paths, input values, and expected vs actual results. |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
@@ -46,7 +59,7 @@ A **Bug** is a defect report describing incorrect, unexpected, or broken behavio
 
 ## Example
 
-**Summary**: [Console] Cluster import wizard fails silently when kubeconfig contains special characters
+**Summary**: [Console] Cluster import fails with special chars in kubeconfig
 
 **Components**: Console
 

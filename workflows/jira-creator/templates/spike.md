@@ -8,11 +8,24 @@ A **Spike** is a time-boxed research or investigation task. Spikes produce knowl
 - **Hierarchy Level**: 0
 - **Available Fields**: 57 (leanest type)
 
+## Summary Guidelines
+
+**Length:** 50-70 characters (max 100, including "Spike: " prefix)
+**Format:** "Spike: [topic] — [key question]"
+**Include:** Research topic + primary question
+**Exclude:** Full sentences, detailed scope — put those in Description
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Spike: Argo CD vs Flux for GitOps addon" | 41 | Good |
+| "Spike: OpenSearch feasibility for ACM Search" | 46 | Good |
+| "Spike: Evaluate whether Argo CD or Flux would be a better replacement for the current GitOps addon at scale" | 110 | Bad — too long |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | "Spike: [topic] — [key question]". Always prefix with "Spike:" for clarity. |
+| Summary | `summary` | "Spike: [topic] — [key question]" (50-70 chars ideal, max 100). Always prefix with "Spike:" for clarity. Keep the topic and question concise. |
 | Description | `description` | Use this structure: **Research Questions** (numbered list of specific questions to answer), **Timebox** (effort budget in points/days), **Deliverables** (what artifact will be produced), **Out of Scope** (what this spike will NOT cover) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
@@ -37,7 +50,7 @@ A **Spike** is a time-boxed research or investigation task. Spikes produce knowl
 
 ## Example
 
-**Summary**: Spike: Evaluate Argo CD vs Flux for GitOps addon replacement
+**Summary**: Spike: Argo CD vs Flux for GitOps addon
 
 **Components**: Application Lifecycle, GitOps Addon
 

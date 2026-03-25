@@ -54,6 +54,11 @@ Create a new JIRA issue based on an existing one. Fetches all fields from the so
      - Summary (differentiate from source)
      - Parent (re-parent under different Epic/Feature)
 
+   **Summary Validation**: After finalizing the Summary (including "Clone: " prefix), check its length.
+   - If > 80 chars, warn and offer to shorten (the "Clone: " prefix alone adds 7 chars)
+   - Suggest removing the "Clone: " prefix and instead differentiating via a meaningful change
+   - Apply auto-shortening rules if the underlying summary is verbose
+
 6. **Smart Defaults**: Apply template Smart Defaults for the issue type if the source didn't have those fields set.
 
 7. **Parent Inheritance**: If the user changes the parent, offer to inherit Components and Target Version from the new parent instead of the source.

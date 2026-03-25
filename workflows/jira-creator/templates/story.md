@@ -8,6 +8,19 @@ A **Story** represents a unit of user-facing functionality that delivers value t
 - **Hierarchy Level**: 0
 - **Available Fields**: 77
 
+## Summary Guidelines
+
+**Length:** 50-70 characters (max 100)
+**Format:** Noun phrase or imperative statement — NOT a full user story
+**Include:** Action/deliverable + key context (component, scope)
+**Exclude:** "As a [role]...", "so that...", full sentences — put these in Description
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Display cluster health indicators on overview page" | 52 | Good |
+| "Add policy violation count badges to cluster list" | 51 | Good |
+| "As a platform engineer, I want to see cluster health status indicators on the overview page so that I can quickly identify clusters needing attention" | 165 | Bad — move to Description |
+
 ## Smart Defaults
 
 These fields are set automatically unless the user overrides them:
@@ -20,7 +33,7 @@ These fields are set automatically unless the user overrides them:
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | User-centric statement. Use "As a [role], [action]" or describe the user-visible behavior. |
+| Summary | `summary` | Concise noun phrase describing the user-visible behavior (50-70 chars ideal, max 100). Do NOT use full "As a [role]..." format in Summary — put user story boilerplate in Description instead. |
 | Description | `description` | Use this structure: **User Story** ("As a [role], I want [capability] so that [benefit]"), **Context** (which epic/feature this belongs to), **Technical Notes** (implementation hints if known) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Target Version | `customfield_10855` | Target ACM/MCE release |

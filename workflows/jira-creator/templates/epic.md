@@ -9,11 +9,24 @@ An **Epic** represents a deliverable body of work that can be completed within a
 - **Available Fields**: 82 (most of any type)
 - **Unique Fields**: Epic Name (`customfield_10011`), OpenShift Planning Ack (`customfield_10761`)
 
+## Summary Guidelines
+
+**Length:** 40-60 characters (max 100)
+**Format:** Noun phrase describing the deliverable scope
+**Include:** Capability area + deliverable scope
+**Exclude:** Full sentences, explanatory clauses ("to ensure...", "in order to...")
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Compliance Dashboard Backend API" | 34 | Good |
+| "Search Performance Optimization" | 32 | Good |
+| "Implement compliance dashboard backend API and data aggregation pipeline for real-time monitoring" | 98 | Bad — too long |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | Deliverable scope statement. Be specific about what will be built/changed. |
+| Summary | `summary` | Concise deliverable scope statement (40-60 chars ideal, max 100). Use a noun phrase, not a full sentence. Must fit in Epic panels without truncation. |
 | Epic Name | `customfield_10011` | Short unique identifier (appears in Epic Link dropdowns). Keep it concise. |
 | Description | `description` | Use this structure: **Goal** (what this epic delivers), **Scope** (what's included), **Out of Scope** (what's excluded), **Technical Approach** (high-level how) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
@@ -50,7 +63,7 @@ An **Epic** represents a deliverable body of work that can be completed within a
 
 ## Example
 
-**Summary**: Implement compliance dashboard backend API and data aggregation pipeline
+**Summary**: Compliance Dashboard Backend API
 
 **Epic Name**: Compliance Dashboard Backend
 

@@ -38,6 +38,31 @@ Create a well-formed ACM JIRA issue through an interactive, guided process. This
    - For option fields (Priority, Severity, Components, Target Version, etc.), present the allowed values
    - Use `@field-expert` agent to validate selections
 
+   **Summary Validation** — immediately after the user provides a Summary:
+   - Check character length and display the count
+   - If **<= 80 chars**: show "Summary length is ideal (N chars)"
+   - If **81-100 chars**: warn "Summary is acceptable but could be shorter (N chars, recommended: 40-80)"
+   - If **101-120 chars**: warn "Summary is too long for optimal JIRA display (N chars)" and offer auto-shorten
+   - If **> 120 chars**: warn "Summary will be truncated in most JIRA views (N chars)" and strongly recommend shortening
+
+   When shortening is recommended, offer three options:
+   ```
+   Summary: "As a platform engineer, I want to see cluster health status..." (165 chars)
+
+   Options:
+   A) Auto-shorten: "Display cluster health indicators on overview page" (52 chars)
+   B) Revise manually
+   C) Keep as-is
+   ```
+
+   Auto-shortening rules (apply in order):
+   1. Strip user story boilerplate ("As a..., I want to..." / "so that...")
+   2. Strip trailing purpose clauses ("to ensure...", "in order to...", "that allows...")
+   3. Condense verbose phrases (e.g., "documentation" -> "docs", "Red Hat Advanced Cluster Management" -> "ACM")
+   4. Extract core action + key scope into a compact noun phrase
+
+   When shortening, preserve the full original text in the Description field.
+
 7. **Gather Recommended Fields**:
    - Present each recommended field with its purpose
    - Allow user to skip any with Enter/blank
@@ -75,7 +100,7 @@ Create a well-formed ACM JIRA issue through an interactive, guided process. This
 
    c. **Hygiene warnings**: Flag issues but do NOT block creation:
       - **Missing recommended fields** — list which ones are unset (e.g., "Acceptance Criteria: not set")
-      - **Summary quality** — warn if too vague, too long (>120 chars), or missing component context
+      - **Summary quality** — warn if too vague, too long (>80 chars ideal, >100 flag, >120 critical), or missing component context. Show char count.
       - **Description quality** — warn if it doesn't follow the structured format for this type
       - **Hierarchy gap** — warn if no parent is set where one is expected (Story without Epic, Epic without Feature)
 

@@ -22,6 +22,43 @@
 
 **Detailed** (`/create`): Walk through "Always ask" fields first, then "Recommended" fields, then offer "Optional" fields. Explain each field's purpose briefly. Produce a thorough, high-quality issue.
 
+## Summary Best Practices
+
+All JIRA summaries must be concise noun phrases, not full sentences. Length targets:
+
+| Rating | Length | Action |
+|--------|--------|--------|
+| Ideal | 40-80 chars | No action needed |
+| Acceptable | 80-100 chars | Suggest shortening |
+| Too long | 100-120 chars | Warn and offer auto-shorten |
+| Critical | 120+ chars | Strongly recommend shortening; will truncate in most JIRA views |
+
+### Summary Rules
+
+- Lead with the **what** (action/deliverable), not the **why**
+- Use noun phrases or imperative statements, never full sentences
+- Remove user story boilerplate ("As a...", "so that...") — move to Description
+- Remove explanatory clauses ("to ensure...", "in order to...", "that allows...")
+- Condense verbose phrases ("documentation and JIRA tracking" -> "docs & JIRA")
+- Always expand "Red Hat Advanced Cluster Management" to just "ACM"
+- Preserve full context in the Description field when shortening
+
+### Auto-Shortening Patterns
+
+When a summary exceeds 80 characters, apply these transformations in order:
+
+1. Strip user story boilerplate: `As a [role], I want to [X] so that [Y]` -> extract `[X]`
+2. Strip trailing purpose clauses: `to ensure...`, `in order to...`, `so that...`
+3. Condense common phrases: "process documentation" -> "process docs", "component ownership map" -> "component ownership"
+4. Replace full product names with abbreviations: "Red Hat Advanced Cluster Management" -> "ACM"
+5. If still > 80 chars, extract core action + key scope into a compact noun phrase
+
+### Type-Specific Length Guidance
+
+- **Stories/Tasks**: 50-70 chars (more specific scope)
+- **Epics/Features**: 40-60 chars (broader scope, needs to fit in Epic panels)
+- **Bugs**: 60-80 chars (need enough detail to identify the defect)
+
 ## Common Patterns
 
 - When user provides a parent issue key, fetch it first to inherit Components and Target Version

@@ -78,7 +78,30 @@ Create a parent issue and its children in a single workflow. Shared fields are s
 
    The user can provide all children at once or add them one at a time.
 
-5. **Pre-Creation Review**: Show the complete structure before creating anything:
+5. **Summary Length Review**: Before the full preview, validate all summaries (parent + children):
+
+   ```
+   Summary Length Review:
+   ┌──────────────┬────────────────────────────────────────────┬───────┬────────┐
+   │ Issue        │ Summary                                    │ Chars │ Status │
+   ├──────────────┼────────────────────────────────────────────┼───────┼────────┤
+   │ Parent Epic  │ Search performance improvements             │ 36    │ Good   │
+   │ Child 1      │ Add query result caching layer              │ 34    │ Good   │
+   │ Child 2      │ Optimize search indexer batch size           │ 37    │ Good   │
+   │ Child 3      │ Benchmark current search latency baseline    │ 44    │ Good   │
+   │ Child 4      │ Evaluate switching to OpenSearch             │ 35    │ Good   │
+   └──────────────┴────────────────────────────────────────────┴───────┴────────┘
+   ```
+
+   Status thresholds: <= 80 = Good, 81-100 = Long, > 100 = Too Long
+
+   If any summary exceeds 80 chars:
+   - Flag it with char count
+   - Offer auto-shorten suggestion
+   - Ask: "N summaries exceed recommended length. Revise? (Y/n)"
+   - Apply auto-shortening rules (strip boilerplate, condense phrases, extract core action)
+
+6. **Pre-Creation Review**: Show the complete structure before creating anything:
    ```
    ┌─ [Epic] Search performance improvements (ACM-XXXXX — already created)
    │  Components: Search | Target Ver: ACM 2.16.0 | Priority: Major
@@ -97,14 +120,14 @@ Create a parent issue and its children in a single workflow. Shared fields are s
 
    Ask: **Create all**, **Edit**, or **Cancel**?
 
-6. **Create Children**: Create each child issue sequentially:
+7. **Create Children**: Create each child issue sequentially:
    - Set parent link to the parent issue
    - Apply inherited fields
    - Apply child-specific fields
    - Use `@field-expert` agent to validate each
    - Report progress: "Created 1/4: ACM-12346 — Add query result caching layer"
 
-7. **Summary Report**: After all children are created, show:
+8. **Summary Report**: After all children are created, show:
    ```
    Bulk creation complete: 4/4 issues created
 
@@ -115,7 +138,7 @@ Create a parent issue and its children in a single workflow. Shared fields are s
    └── ACM-12349 [Spike] Evaluate switching to OpenSearch (3 pts)
    ```
 
-8. **Log**: Append all created issues to `artifacts/jira-creator/created-issues.md` with note: "Bulk: parent {PARENT-KEY}"
+9. **Log**: Append all created issues to `artifacts/jira-creator/created-issues.md` with note: "Bulk: parent {PARENT-KEY}"
 
 ## Error Handling
 

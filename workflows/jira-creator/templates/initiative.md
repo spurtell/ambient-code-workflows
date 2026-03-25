@@ -8,6 +8,19 @@ An **Initiative** represents a program-level grouping of related Features that t
 - **Required Label**: `initiative`
 - **Hierarchy**: Groups related Features; may roll up to an Outcome
 
+## Summary Guidelines
+
+**Length:** 40-60 characters (max 100)
+**Format:** Noun phrase describing the program scope
+**Include:** Capability area + scope boundary
+**Exclude:** Full sentences, team details, business justification
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "HyperShift Hosted Control Planes GA Readiness" | 47 | Good |
+| "ACM Console Accessibility Compliance" | 37 | Good |
+| "HyperShift hosted control planes GA readiness for ACM 2.16 including all feature completion and scale testing" | 111 | Bad — too long |
+
 ## Smart Defaults
 
 These fields are set automatically unless the user overrides them:
@@ -21,7 +34,7 @@ These fields are set automatically unless the user overrides them:
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | Program-level capability statement. Be specific about scope and boundary. |
+| Summary | `summary` | Concise program-level capability statement (40-60 chars ideal, max 100). Be specific about scope. Use a noun phrase, not a full sentence. |
 | Description | `description` | Use this structure: **Program Scope** (what this initiative delivers), **Teams Involved** (which areas it spans), **Business Justification** (why this grouping matters), **Child Features** (list of planned features) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |

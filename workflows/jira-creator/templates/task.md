@@ -8,11 +8,24 @@ A **Task** represents technical or operational work that is not directly user-fa
 - **Hierarchy Level**: 0
 - **Available Fields**: 71
 
+## Summary Guidelines
+
+**Length:** 50-70 characters (max 100)
+**Format:** Imperative action statement: "Update...", "Configure...", "Migrate..."
+**Include:** Action verb + target + key context
+**Exclude:** Full sentences, rationale — put those in Description
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Upgrade Go dependencies for CVE-2024-XXXXX" | 44 | Good |
+| "Configure CI pipeline for multi-arch builds" | 44 | Good |
+| "Update all Go dependencies across ACM repositories to address critical CVE in net/http package" | 96 | Bad — too long |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | Clear action statement: "Update...", "Configure...", "Migrate..." |
+| Summary | `summary` | Clear action statement (50-70 chars ideal, max 100): "Update...", "Configure...", "Migrate...". Use imperative noun phrase, not a full sentence. |
 | Description | `description` | Use this structure: **Background** (why this task is needed), **Task** (specific actions to take), **Constraints** (deadlines, dependencies, approvals needed) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
@@ -39,7 +52,7 @@ A **Task** represents technical or operational work that is not directly user-fa
 
 ## Example
 
-**Summary**: Upgrade Go dependencies to address CVE-2024-XXXXX in net/http
+**Summary**: Upgrade Go deps for CVE-2024-XXXXX in net/http
 
 **Components**: Secure Engineering
 

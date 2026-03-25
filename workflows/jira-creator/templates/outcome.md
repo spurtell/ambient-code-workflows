@@ -8,6 +8,19 @@ An **Outcome** represents a strategic business objective or measurable result th
 - **Required Label**: `outcome`
 - **Hierarchy**: Above Feature — group Features and Initiatives under Outcomes
 
+## Summary Guidelines
+
+**Length:** 40-60 characters (max 100)
+**Format:** Strategic objective starting with a verb: "Improve...", "Enable...", "Reduce..."
+**Include:** Action verb + strategic target
+**Exclude:** Full sentences, implementation details, explanatory clauses
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Enable multi-cloud cluster lifecycle management" | 49 | Good |
+| "Reduce compliance violation detection time" | 43 | Good |
+| "Enable seamless multi-cloud cluster lifecycle management across AWS, Azure, and GCP" | 84 | Bad — too long |
+
 ## Smart Defaults
 
 These fields are set automatically unless the user overrides them:
@@ -21,7 +34,7 @@ These fields are set automatically unless the user overrides them:
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | Strategic objective statement. Start with a verb: "Improve...", "Enable...", "Reduce..." |
+| Summary | `summary` | Concise strategic objective (40-60 chars ideal, max 100). Start with a verb: "Improve...", "Enable...", "Reduce...". Avoid explanatory clauses. |
 | Description | `description` | Use this structure: **Business Objective** (what we want to achieve), **Why It Matters** (strategic context), **Success Metrics** (how we measure achievement), **Scope** (what areas/teams are involved) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
@@ -49,7 +62,7 @@ These fields are set automatically unless the user overrides them:
 
 ## Example
 
-**Summary**: Enable seamless multi-cloud cluster lifecycle management across AWS, Azure, and GCP
+**Summary**: Enable multi-cloud cluster lifecycle management
 
 **Components**: Cluster Lifecycle, Console
 

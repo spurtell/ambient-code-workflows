@@ -22,15 +22,41 @@ Check against the template for the issue type (in `templates/`):
 
 ### 2. Summary Quality (0-2 points)
 
-**2 points**: Specific, actionable, includes context (component, behavior, scope)
-**1 point**: Understandable but vague or too broad
-**0 points**: Generic, unclear, or duplicates description
+**2 points**: Specific, actionable, includes context, AND <= 80 characters
+**1 point**: Understandable but vague, too broad, OR 81-100 characters
+**0 points**: Generic, unclear, duplicates description, OR > 100 characters
 
-Good patterns:
-- Bug: "[Component] [behavior] when [condition]"
-- Story: "As a [role], [capability] so that [benefit]"
-- Epic: "[Capability area]: [deliverable scope]"
-- Feature: "[Market need]: [product capability]"
+#### Length Check
+
+Always report the summary character count and assess against thresholds:
+- **Ideal (40-80 chars)**: No length deduction
+- **Acceptable (81-100 chars)**: Flag as "Recommended" finding — suggest shortening
+- **Too long (101-120 chars)**: Flag as "Critical" finding — offer auto-shortened version
+- **Critical (120+ chars)**: Flag as "Critical" finding — will truncate in JIRA boards/backlogs
+
+#### Auto-Shortening
+
+When summary exceeds 80 chars, suggest a shortened version by applying these rules in order:
+1. Strip user story boilerplate: "As a [role], I want to [X] so that [Y]" -> extract [X]
+2. Strip trailing clauses: "to ensure...", "in order to...", "so that...", "that allows..."
+3. Condense verbose phrases: "documentation" -> "docs", "Red Hat Advanced Cluster Management" -> "ACM"
+4. Extract core action + key scope into a compact noun phrase
+
+Always show before/after with char counts in findings.
+
+#### Content Patterns
+
+Good summary patterns (concise noun phrases):
+- Bug: "[Component] [behavior] when [condition]" (60-80 chars)
+- Story: "[Action] [object] in [context]" (50-70 chars)
+- Epic: "[Capability area]: [deliverable scope]" (40-60 chars)
+- Feature: "[Market need]: [product capability]" (40-60 chars)
+
+Bad patterns to flag:
+- Contains "As a [role], I want to..." (user story boilerplate — move to Description)
+- Contains "to ensure...", "in order to...", "so that..." (purpose clauses — move to Description)
+- Contains vague terms without specifics: "improvement", "enhancement", "update", "changes"
+- Full sentences with subjects and verbs instead of noun phrases
 
 ### 3. Description Quality (0-2 points)
 

@@ -34,7 +34,8 @@ Analyze an existing ACM JIRA issue and produce actionable recommendations for im
    - For Features: Are Size and Release Type set?
 
    ### Quality Check
-   - **Summary**: Is it concise, specific, and actionable? (Bad: "Fix bug"; Good: "Console crashes when importing cluster with special characters in name")
+   - **Summary length**: Check character count against thresholds (ideal: 40-80, acceptable: 80-100, too long: 100+). If > 80 chars, suggest a shortened version using auto-shortening rules (strip boilerplate, condense phrases, extract core action). Show before/after with char counts.
+   - **Summary content**: Is it concise, specific, and actionable? Flag if it contains user story boilerplate ("As a..."), explanatory clauses ("to ensure...", "in order to..."), or vague terms ("improvement", "enhancement" without specifics).
    - **Description**: Is it detailed enough for someone unfamiliar to understand?
    - **Acceptance Criteria**: Are they testable and specific?
    - **Components**: Are they appropriate for the work described?

@@ -16,11 +16,24 @@ These fields are set automatically unless the user overrides them:
 |-------|-----|---------|----|
 | Activity Type | `customfield_10464` | Product / Portfolio Work | 10610 |
 
+## Summary Guidelines
+
+**Length:** 40-60 characters (max 100)
+**Format:** Noun phrase describing the product capability
+**Include:** Market need + product capability
+**Exclude:** Full sentences, target personas, explanatory clauses
+
+| Example | Chars | Rating |
+|---------|-------|--------|
+| "Real-Time Compliance Dashboard with Policy Alerts" | 51 | Good |
+| "Multi-Cloud Cluster Lifecycle Management" | 41 | Good |
+| "Cluster compliance dashboard with real-time policy violation alerts for platform engineers managing 50+ clusters" | 115 | Bad — too long |
+
 ## Always Ask
 
 | Field | Key | Guidance |
 |-------|-----|----------|
-| Summary | `summary` | Market-facing capability statement. Focus on the customer problem being solved. |
+| Summary | `summary` | Concise market-facing capability statement (40-60 chars ideal, max 100). Use a noun phrase, not a full sentence. Avoid explanatory clauses. |
 | Description | `description` | Use this structure: **Problem** (what's broken/missing), **Target Persona** (who benefits), **Business Value** (measurable impact), **Solution Approach** (high-level how) |
 | Components | `components` | Common: Console (33685), Cluster Lifecycle (33696), GRC (33694), Observability (33700), HyperShift (33695), Search (33705), Application Lifecycle (33686), Business Continuity (33687), Global Hub (33693), Edge (33729). See `reference/acm-jira-allowed-values.md` for full list. |
 | Priority | `priority` | Blocker (10000), Critical (10001), Major (10002), Normal (10003), Minor (10004) |
@@ -56,7 +69,7 @@ These fields are set automatically unless the user overrides them:
 
 ## Example
 
-**Summary**: Cluster compliance dashboard with real-time policy violation alerts
+**Summary**: Real-Time Compliance Dashboard with Policy Alerts
 
 **Components**: Console, GRC
 

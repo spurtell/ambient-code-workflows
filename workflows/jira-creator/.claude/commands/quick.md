@@ -48,24 +48,30 @@ Fast-path issue creation for experienced users. Only asks for the essential fiel
    - Target Version (from parent)
    - Activity Type (from parent, if not already a smart default)
 
-6. **Pre-Creation Review**:
+6. **Summary Validation**: After gathering the Summary, check its length:
+   - **<= 80 chars**: Good — proceed
+   - **81-100 chars**: Show warning with char count, offer to shorten
+   - **> 100 chars**: Strongly recommend shortening; offer auto-shorten option
+   Apply auto-shortening rules (strip boilerplate, condense phrases, extract core action). Preserve full text in Description.
+
+7. **Pre-Creation Review**:
 
    Use `@field-expert` agent to validate Components and any option fields, then show a compact preview:
 
    ```
-   [TYPE] Summary text here
+   [TYPE] Summary text here (N chars)
    Components: Console | Priority: Normal | Severity: Important
    Target Ver: ACM 2.16.0 | Parent: (none)
    ⚠ No Acceptance Criteria set
    ```
 
-   Flag missing recommended fields as warnings (single line each). Show a quick hygiene score (e.g., "Quality: 6/10").
+   Flag missing recommended fields as warnings (single line each). Flag summary length if > 80 chars. Show a quick hygiene score (e.g., "Quality: 6/10").
 
    Ask: **Create**, **Edit**, or **Cancel**?
 
-7. **Create Issue**: Use `createJiraIssue` MCP tool. Report key and link.
+8. **Create Issue**: Use `createJiraIssue` MCP tool. Report key and link.
 
-8. **Log**: Append to `artifacts/jira-creator/created-issues.md`
+9. **Log**: Append to `artifacts/jira-creator/created-issues.md`
 
 ## Output
 
